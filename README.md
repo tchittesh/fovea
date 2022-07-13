@@ -54,7 +54,7 @@ Your final directory structure should look something like this:
 
 This should be super easy! Fill in the `experiments/path.sh` file with your local paths to the data/repos/checkpoints as well as where you want output files to go. Then, simply run 
 ```
-sh KDE_SI.sh
+sh experiments/KDE_SI.sh
 ```
 (or any of the others) to perform inference on the Argoverse-HD dataset using the FOVEA models. For a deeper look at what each flag in these bash scripts is accomplishing, refer to `fovea/utils/config.py`. The Python script used for online inference is `tools/test.py`.
 

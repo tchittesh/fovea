@@ -33,6 +33,27 @@ python tools/test.py \
     --grid-net-cfg "$cfgDir/models/fixed_kde_grid.py" \
     --saliency-file "$outDir/$expName/dataset_saliency.pkl" \
 
+# Train model
+python -m torch.distributed.launch \
+	--nproc_per_node $nGPU \
+    --master_port 1238 \
+    tools/train.py \
+    --data-dir "$dataDir" \
+    --work-dir "$outDir/$expName/work" \
+    --load-task-weights "$checkpointsDir/faster_rcnn_r50_fpn_2x_coco_bbox_mAP-0.384_20200504_210434-a5d8aa15.pth" \
+    --gpus $nGPU \
+    --launcher pytorch \
+    --dataset-config "$cfgDir/datasets/avhd.py" \
+    --model-config "$cfgDir/models/fovea_faster_rcnn_r50_fpn.py" \
+    --schedule-config "$cfgDir/schedules/schedule_poly.py" \
+    --runtime-config "$cfgDir/default_runtime.py" \
+    --preprocess-scale "1" \
+    --reg-decoded-bbox \
+    --num-classes 8 \
+    --use-fovea \
+    --grid-net-cfg "$cfgDir/models/fixed_kde_grid.py" \
+    --saliency-file "$outDir/$expName/dataset_saliency.pkl" \
+
 # Finetuned model
 python tools/test.py \
     --gpu-test-pre \
